@@ -15,7 +15,7 @@ To simulate a real-world industrial deployment scenario and prevent data leakage
 ## 📊 Exploratory Data Analysis (EDA)
 Understanding the interconnected thermodynamic and electrical relationships between the compressor sensors is vital. Below is the statistical cross-correlation mapping computed from the baseline telemetry via `sns.heatmap`:
 
-![Sensor Correlation Matrix](assets/Correlation_Matrix_of_MetroPT_Compressor_Sensors.png)
+<img src="assets/Correlation_Matrix_of_MetroPT_Compressor_Sensors.png" width="60%">
 
 ---
 
@@ -32,13 +32,17 @@ When an **Air Leak** develops, this physics-based correlation breaks down—pres
 
 ## 📈 Model Performance & Evolution
 
-### Baseline Model: Isolation Forest
+### 1. Baseline Model: Isolation Forest
 Initially, **Isolation Forest** was deployed as a baseline. While computationally fast, it struggled to capture the gradual, micro-leak degradation phase, yielding an unacceptable **Recall of only 2%** on the failure event. The confusion matrix below highlights how the baseline model missed 8,458 true anomaly slices (False Negatives):
 
-![Baseline Confusion Matrix](assets/Confusion_Matrix_for_MetroPT_Leak_Detection_(Baseline).png)
+<img src="assets/Confusion_Matrix_for_MetroPT_Leak_Detection_(Baseline).png" width="50%">
 
-### Final Champion Model: One-Class SVM
-By pivoting to **One-Class SVM** and applying smart **10% stratified sampling** to overcome the high computational complexity ($O(N^2)$) on massive high-frequency data, the system achieved a massive performance leap:
+### 2. Final Champion Model: One-Class SVM
+By pivoting to **One-Class SVM** and applying smart **10% stratified sampling** to overcome the high computational complexity ($O(N^2)$) on massive high-frequency data, the system achieved a massive performance leap. As shown in the confusion matrix below, the model successfully captured 8,567 out of 8,657 true anomaly operations, reducing False Negatives drastically:
+
+<img src="assets/Confusion_Matrix_for_MetroPT_Leak_Detection_(OneClassSVM).png" width="50%">
+
+### 📊 Comparative Performance Matrix
 
 | Metric | Baseline (Isolation Forest) | Final Model (One-Class SVM) |
 | :--- | :---: | :---: |
