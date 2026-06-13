@@ -1,0 +1,17 @@
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# Ignore large datasets
+*.csv
+*.xlsx
+data/
+
+# Ignore heavy trained ML models
+*.pkl
+*.joblib
+*.h5
+
+# Ignore python cache
+__pycache__/
+*.pyc
