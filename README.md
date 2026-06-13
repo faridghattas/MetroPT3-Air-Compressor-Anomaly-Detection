@@ -12,6 +12,13 @@ To simulate a real-world industrial deployment scenario and prevent data leakage
 
 ---
 
+## 📊 Exploratory Data Analysis (EDA)
+Understanding the interconnected thermodynamic and electrical relationships between the compressor sensors is vital. Below is the statistical cross-correlation mapping computed from the baseline telemetry via `sns.heatmap`:
+
+![Sensor Correlation Matrix](assets/Correlation_Matrix_of_MetroPT_Compressor_Sensors.png)
+
+---
+
 ## 🧠 Engineering Insights: How the Model Works Mechanically
 Traditional maintenance triggers an alert only when a single sensor exceeds a specific safety limit. This project utilizes **One-Class SVM (RBF Kernel)** to evaluate the multivariate relationships across the entire compressor system simultaneously. 
 
@@ -25,8 +32,12 @@ When an **Air Leak** develops, this physics-based correlation breaks down—pres
 
 ## 📈 Model Performance & Evolution
 
-Initially, **Isolation Forest** was deployed as a baseline. While computationally fast, it struggled to capture the gradual, micro-leak degradation phase, yielding an unacceptable **Recall of only 2%** on the failure event.
+### Baseline Model: Isolation Forest
+Initially, **Isolation Forest** was deployed as a baseline. While computationally fast, it struggled to capture the gradual, micro-leak degradation phase, yielding an unacceptable **Recall of only 2%** on the failure event. The confusion matrix below highlights how the baseline model missed 8,458 true anomaly slices (False Negatives):
 
+![Baseline Confusion Matrix](assets/Confusion_Matrix_for_MetroPT_Leak_Detection_(Baseline).png)
+
+### Final Champion Model: One-Class SVM
 By pivoting to **One-Class SVM** and applying smart **10% stratified sampling** to overcome the high computational complexity ($O(N^2)$) on massive high-frequency data, the system achieved a massive performance leap:
 
 | Metric | Baseline (Isolation Forest) | Final Model (One-Class SVM) |
